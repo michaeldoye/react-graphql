@@ -6,6 +6,7 @@
 /backend/lib
 /.pnp
 .pnp.js
+.idea*
 
 # testing
 /coverage
