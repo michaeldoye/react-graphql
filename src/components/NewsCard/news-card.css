@@ -1,0 +1,13 @@
+.card {
+    width: 31%;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
+p.card-text img {
+    display: none;
+}
+
+p.card-text a {
+    display: none;
+}
