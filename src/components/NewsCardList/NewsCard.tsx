@@ -1,11 +1,8 @@
 import React from "react";
-import './news-card.css';
 
-function NewsCard({...props}: any) {
-    const { item, index} = props;
-
+export const NewsCard = ({item}: any) => {
     return (
-        <div className="card" key={index}>
+        <div className="card">
             <img className="card-img-top" src={item.image} alt="Card image cap" />
             <ul className="list-group list-group-flush">
                 <li className="list-group-item">{item.pubDate}</li>
@@ -17,6 +14,4 @@ function NewsCard({...props}: any) {
             </div>
         </div>
     )
-}
-
-export default NewsCard;
+};
