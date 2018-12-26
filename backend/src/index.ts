@@ -6,10 +6,14 @@ import { schema } from "./schema";
 
 const app = express();
 
-app.use("/backend", cors(), graphqlHTTP({
+app.use(
+  "/backend",
+  cors(),
+  graphqlHTTP({
     graphiql: true,
     rootValue,
     schema,
-}));
+  }),
+);
 
 app.listen(80);
