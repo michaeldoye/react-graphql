@@ -5,13 +5,9 @@ import { client } from "../../graphql/client";
 import { ApolloProvider } from "react-apollo";
 import { NewsCardList } from "../NewsCardList";
 import { LANGUAGE_OPTIONS, PAGE_SIZE_OPTIONS } from "../../shared/constants";
+import { IComponentState } from "./App.interface";
 
-interface ComponentState {
-    pageSize: string | null | undefined;
-    language: string | null | undefined;
-}
-
-export class App extends Component<{}, ComponentState> {
+export class App extends Component<{}, IComponentState> {
     constructor(props: any) {
         super(props);
 
@@ -48,8 +44,7 @@ export class App extends Component<{}, ComponentState> {
                     <select
                         className="custom-select"
                         onChange={this.pageSizeChangeHandler}
-                        value={pageSize || ""}
-                    >
+                        value={pageSize || ""}>
                         {PAGE_SIZE_OPTIONS.map(opt => (
                             <option key={opt} value={opt}>
                                 {opt}
@@ -59,8 +54,7 @@ export class App extends Component<{}, ComponentState> {
                     <select
                         className="custom-select"
                         onChange={this.languageChangeHandler}
-                        value={language || ""}
-                    >
+                        value={language || ""}>
                         {LANGUAGE_OPTIONS.map(opt => (
                             <option key={opt} value={opt}>
                                 {opt}
@@ -70,10 +64,7 @@ export class App extends Component<{}, ComponentState> {
                 </section>
                 <section className="App__section container">
                     <ApolloProvider client={client}>
-                        <NewsCardList
-                            querySize={pageSize}
-                            language={language}
-                        />
+                        <NewsCardList querySize={pageSize} language={language} />
                     </ApolloProvider>
                 </section>
             </div>

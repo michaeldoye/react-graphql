@@ -6,10 +6,7 @@ import { Loader } from "../Loader";
 import "./NewsCardList.scss";
 
 export const NewsCardList = ({ querySize, language }: any) => (
-    <Query
-        query={NEWS_FEED_QUERY}
-        variables={{ size: querySize, lang: language }}
-    >
+    <Query query={NEWS_FEED_QUERY} variables={{ size: querySize, lang: language }}>
         {({ loading, error, data }) => {
             if (loading) return <Loader />;
             if (error) return <p>Error :(</p>;

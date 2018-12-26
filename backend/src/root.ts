@@ -1,52 +1,28 @@
 import * as moment from "moment";
-import fetch from "node-fetch";
 import * as Parser from "rss-parser";
-import {
-    NEWS_ENDPOINT_XML,
-    TRANSLATE_API_KEY,
-    TRANSLATE_ENDPOINT_JSON,
-} from "./constants";
+import { IRssFeedItem, IRssFeedJson, NEWS_ENDPOINT_XML } from "./constants";
+import { getImageUrlFromString, maybeTranslate } from "./helpers";
 
 const parser = new Parser();
 
 export const rootValue = {
-    newsFeed: async ({ size, lang }): Promise<any> => {
+    newsFeed: async ({ size, lang }): Promise<IRssFeedJson> => {
         const feed = await parser.parseURL(NEWS_ENDPOINT_XML);
-        const regEx = /https?([^"\s]+)"?[^>]*.jpg/;
 
-        const newsArticles = feed.items.map((item) => {
+        const newsArticles = feed.items.map((item: IRssFeedItem) => {
             if (!item) {
                 return;
             }
-            item.image = regEx.exec(item.content)[0];
+            item.image = getImageUrlFromString(item.content);
             item.pubDate = moment(new Date(item.pubDate)).fromNow();
-            item.content =
-                !lang || lang === "en"
-                    ? item.content
-                    : translate(lang, item.content);
+            item.content = maybeTranslate(lang, item, "content");
+            item.title = maybeTranslate(lang, item, "title");
             return item;
         });
 
         return {
-            items: newsArticles.slice(0, parseInt(size, 10)),
+            items: newsArticles.slice(0, Number(size)),
             title: feed.title,
         };
     },
 };
-
-async function translate(lang: string, str: string): Promise<any> {
-    // https://cloud.google.com/translate/v2/getting_started
-    const url =
-        TRANSLATE_ENDPOINT_JSON +
-        "?key=" +
-        TRANSLATE_API_KEY +
-        "&source=en" +
-        "&target=" +
-        lang +
-        "&q=" +
-        encodeURIComponent(str);
-    const fetchTranslation = await fetch(url);
-    const translated = await fetchTranslation.json();
-
-    return translated.data.translations[0].translatedText;
-}
