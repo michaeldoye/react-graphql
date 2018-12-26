@@ -5,7 +5,7 @@ import {
     NEWS_ENDPOINT_XML,
     TRANSLATE_API_KEY,
     TRANSLATE_ENDPOINT_JSON,
-} from "./contstants";
+} from "./constants";
 
 const parser = new Parser();
 
