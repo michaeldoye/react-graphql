@@ -1,12 +1,12 @@
-import * as moment from "moment";
+// @ts-ignore
 import * as Parser from "rss-parser";
 import { IRssFeedItem, IRssFeedJson, NEWS_ENDPOINT_XML } from "./constants";
-import { getImageUrlFromString, maybeTranslate } from "./helpers";
+import { getImageUrlFromString, getTimeFromNow, maybeTranslate } from "./helpers";
 
 const parser = new Parser();
 
 export const rootValue = {
-    newsFeed: async ({ size, lang }): Promise<IRssFeedJson> => {
+    newsFeed: async ({ size, lang }: any): Promise<IRssFeedJson> => {
         const feed = await parser.parseURL(NEWS_ENDPOINT_XML);
 
         const newsArticles = feed.items.map((item: IRssFeedItem) => {
@@ -14,7 +14,7 @@ export const rootValue = {
                 return;
             }
             item.image = getImageUrlFromString(item.content);
-            item.pubDate = moment(new Date(item.pubDate)).fromNow();
+            item.pubDate = getTimeFromNow(item.pubDate);
             item.content = maybeTranslate(lang, item, "content");
             item.title = maybeTranslate(lang, item, "title");
             return item;
