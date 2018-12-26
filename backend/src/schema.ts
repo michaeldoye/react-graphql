@@ -3,7 +3,7 @@ import { makeExecutableSchema } from "graphql-tools";
 // Construct a schema, using GraphQL schema language
 // https://www.apollographql.com/docs/graphql-tools/generate-schema.html
 const typeDefs = [
-  `
+    `
     type FeedItems {
         title: String
         link: String
@@ -32,17 +32,17 @@ const typeDefs = [
 // https://www.apollographql.com/docs/graphql-tools/resolvers.html
 // https://www.apollographql.com/docs/graphql-tools/resolvers.html#Resolver-function-signature
 const resolvers = {
-  Query: {
-    newsFeed: (obj, args) => {
-      return obj.newsFeed(
-        {
-          lang: args.lang,
-          size: args.size,
+    Query: {
+        newsFeed: (obj, args) => {
+            return obj.newsFeed(
+                {
+                    lang: args.lang,
+                    size: args.size,
+                },
+                null,
+            );
         },
-        null,
-      );
     },
-  },
 };
 
 export const schema = makeExecutableSchema({ typeDefs, resolvers });

@@ -1,6 +1,6 @@
 {
   "name": "my-app",
-  "version": "0.1.187",
+  "version": "0.1.194",
   "private": true,
   "dependencies": {
     "@types/jest": "^23.3.10",

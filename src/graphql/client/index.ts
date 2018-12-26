@@ -5,6 +5,6 @@ import { HttpLink } from "apollo-link-http";
 import { ENDPOINT } from "../../shared/constants";
 
 export const client = new ApolloClient({
-  cache: new InMemoryCache() as ApolloCache<NormalizedCacheObject>,
-  link: new HttpLink({ uri: ENDPOINT })
+    cache: new InMemoryCache() as ApolloCache<NormalizedCacheObject>,
+    link: new HttpLink({ uri: ENDPOINT }),
 });
