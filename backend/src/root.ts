@@ -1,7 +1,12 @@
 // @ts-ignore
 import * as Parser from "rss-parser";
 import { IRssFeedItem, IRssFeedJson, NEWS_ENDPOINT_XML } from "./constants";
-import { getImageUrlFromString, getTimeFromNow, maybeTranslate } from "./helpers";
+import {
+    getImageUrlFromString,
+    getTimeFromNow,
+    maybeTranslate,
+    translate,
+} from "./helpers";
 
 const parser = new Parser();
 
@@ -15,8 +20,8 @@ export const rootValue = {
             }
             item.image = getImageUrlFromString(item.content);
             item.pubDate = getTimeFromNow(item.pubDate);
-            item.content = maybeTranslate(lang, item, "content");
-            item.title = maybeTranslate(lang, item, "title");
+            item.content = translate(lang, item.content);
+            item.title = translate(lang, item.title);
             return item;
         });
 

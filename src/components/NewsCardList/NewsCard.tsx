@@ -9,8 +9,14 @@ export const NewsCard = ({ item }: any) => {
             </ul>
             <div className="card-body">
                 <h5 className="card-title">{item.title}</h5>
-                <p className="card-text" dangerouslySetInnerHTML={{ __html: item.content }} />
-                <a href={item.link} className="btn btn-primary">
+                <p
+                    className="card-text"
+                    dangerouslySetInnerHTML={{ __html: item.content }}
+                />
+                <a
+                    href={`https://magic.wizards.com${item.link}`}
+                    target="_blank"
+                    className="btn btn-primary">
                     Read More
                 </a>
             </div>
