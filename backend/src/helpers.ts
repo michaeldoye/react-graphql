@@ -1,18 +1,6 @@
 import fetch from "node-fetch";
-import {
-    IRssFeedItem,
-    TRANSLATE_API_KEY,
-    TRANSLATE_ENDPOINT_JSON,
-} from "./constants";
+import { TRANSLATE_API_KEY, TRANSLATE_ENDPOINT_JSON } from "./constants";
 import * as moment from "moment";
-
-export function maybeTranslate(
-    lang: string,
-    obj: IRssFeedItem,
-    key: keyof IRssFeedItem
-): any {
-    return !lang || lang === "en" ? obj[key] : translate(lang, obj[key]);
-}
 
 export function getImageUrlFromString(str: any): any {
     const regEx = /https?([^"\s]+)"?[^>]*.jpg/;
@@ -20,7 +8,7 @@ export function getImageUrlFromString(str: any): any {
 }
 
 export function getTimeFromNow(date: any): string {
-    // @ts-ignore
+    // @ts-ignore because moment :(
     return moment(new Date(date)).fromNow();
 }
 

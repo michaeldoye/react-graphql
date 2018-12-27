@@ -1,12 +1,7 @@
 // @ts-ignore
 import * as Parser from "rss-parser";
 import { IRssFeedItem, IRssFeedJson, NEWS_ENDPOINT_XML } from "./constants";
-import {
-    getImageUrlFromString,
-    getTimeFromNow,
-    maybeTranslate,
-    translate,
-} from "./helpers";
+import { getImageUrlFromString, getTimeFromNow, translate } from "./helpers";
 
 const parser = new Parser();
 
