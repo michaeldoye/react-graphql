@@ -1,22 +1,23 @@
 import * as cors from "cors";
 import * as express from "express";
 import * as graphqlHTTP from "express-graphql";
-import { rootValue } from "./root";
 import { schema } from "./schema";
 
+// @ts-ignore
 const app = express();
 
 /*
  * Create a local express server to host
- * the graphql instance.
+ * the schema instance:
+ * More: https://github.com/graphql/express-graphql#options
  */
 app.use(
     "/backend",
+    // @ts-ignore
     cors(),
-    // https://github.com/graphql/express-graphql#options
+    // @ts-ignore
     graphqlHTTP({
         graphiql: true,
-        rootValue,
         schema,
     })
 );
