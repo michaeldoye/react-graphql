@@ -1,0 +1,22 @@
+type FeedItems {
+    title: String
+    link: String
+    image: String
+    pubDate: String
+    content: String
+    contentSnippet: String
+    categories: [String]
+}
+
+type Feed {
+    title: String
+    items: [FeedItems]
+}
+
+type Query {
+    newsFeed(size: String, lang: String): Feed
+}
+
+schema {
+    query: Query
+}
