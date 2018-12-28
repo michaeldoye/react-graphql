@@ -1,8 +1,8 @@
 import React from "react";
 import { Query } from "react-apollo";
 import { NEWS_FEED_QUERY } from "../../graphql/queries";
-import { NewsCard } from "./NewsCard";
-import { Loader } from "../Loader";
+import NewsCard from "./NewsCard";
+import Loader from "../Loader";
 import "./NewsCardList.scss";
 
 export const NewsCardList = ({ querySize, language }: any) => (

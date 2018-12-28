@@ -1,11 +1,13 @@
 import React, { Component } from "react";
-import logo from "../../logo.svg";
 import "./App.scss";
 import { client } from "../../graphql/client";
 import { ApolloProvider } from "react-apollo";
 import { NewsCardList } from "../NewsCardList";
 import { LANGUAGE_OPTIONS, PAGE_SIZE_OPTIONS } from "../../shared/constants";
 import { IComponentState } from "./App.interface";
+import LanguageSelect from "../LanguageSelect";
+import SizeSelect from "../SizeSelect";
+import TopBar from "../TopBar";
 
 export class App extends Component<{}, IComponentState> {
     constructor(props: any) {
@@ -15,20 +17,20 @@ export class App extends Component<{}, IComponentState> {
         this.languageChangeHandler = this.languageChangeHandler.bind(this);
 
         this.state = {
-            pageSize: PAGE_SIZE_OPTIONS[1],
+            pageSize: PAGE_SIZE_OPTIONS[3],
             language: LANGUAGE_OPTIONS[0],
         };
     }
 
     pageSizeChangeHandler(event: any) {
         this.setState({
-            pageSize: event.currentTarget.value,
+            pageSize: event.target.value,
         });
     }
 
     languageChangeHandler(event: any) {
         this.setState({
-            language: event ? event.currentTarget.value : "",
+            language: event ? event.target.value : "",
         });
     }
 
@@ -37,30 +39,16 @@ export class App extends Component<{}, IComponentState> {
 
         return (
             <div className="App">
-                <header className="App__header">
-                    <img src={logo} className="App__logo" alt="logo" />
-                </header>
+                <TopBar />
                 <section className="App__section-controls container">
-                    <select
-                        className="custom-select"
-                        onChange={this.pageSizeChangeHandler}
-                        value={pageSize || ""}>
-                        {PAGE_SIZE_OPTIONS.map(opt => (
-                            <option key={opt} value={opt}>
-                                {opt}
-                            </option>
-                        ))}
-                    </select>
-                    <select
-                        className="custom-select"
-                        onChange={this.languageChangeHandler}
-                        value={language || ""}>
-                        {LANGUAGE_OPTIONS.map(opt => (
-                            <option key={opt} value={opt}>
-                                {opt}
-                            </option>
-                        ))}
-                    </select>
+                    <SizeSelect
+                        changeHandler={this.pageSizeChangeHandler}
+                        pageSize={pageSize}
+                    />
+                    <LanguageSelect
+                        changeHandler={this.languageChangeHandler}
+                        language={language}
+                    />
                 </section>
                 <section className="App__section container">
                     <ApolloProvider client={client}>

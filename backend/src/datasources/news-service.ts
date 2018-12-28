@@ -1,7 +1,5 @@
 import fetch from "node-fetch";
 import * as moment from "moment";
-// @ts-ignore
-import * as Parser from "rss-parser";
 import {
     IRssFeed,
     IRssFeedItem,
@@ -9,6 +7,8 @@ import {
     TRANSLATE_API_KEY,
     TRANSLATE_ENDPOINT_JSON,
 } from "../constants";
+// @ts-ignore
+import * as Parser from "rss-parser";
 
 /*
  * NewsService
@@ -26,15 +26,8 @@ export class NewsService {
 
     public async getNews(size: string, lang: string): Promise<IRssFeed> {
         const feed = await this._parser.parseURL(NEWS_ENDPOINT_XML);
-
-        const newsArticles = feed.items.map((item: IRssFeedItem) => {
-            item.image = this._getImageUrlFromString(item.content);
-            item.pubDate = this._getTimeFromNow(item.pubDate);
-            item.content = this._translate(lang, item.content);
-            item.title = this._translate(lang, item.title);
-            return item;
-        });
-
+        // Add/transform some props of the news objects
+        const newsArticles = this._extendNewsObject(feed.items, lang);
         return {
             items: newsArticles.slice(0, Number(size)),
             title: feed.title,
@@ -69,5 +62,22 @@ export class NewsService {
     private _getTimeFromNow(date: any): string {
         // @ts-ignore because moment :(
         return moment(new Date(date)).fromNow();
+    }
+
+    private _extendNewsObject(
+        newsObj: IRssFeedItem[],
+        lang: string
+    ): IRssFeedItem[] {
+        return newsObj.map((item: IRssFeedItem) => {
+            const mutatedObj = {
+                primaryLink: this._translate(lang, "Share"),
+                secondaryLink: this._translate(lang, "Read More"),
+                image: this._getImageUrlFromString(item.content),
+                pubDate: this._translate(lang, this._getTimeFromNow(item.pubDate)),
+                content: this._translate(lang, item.content),
+                title: this._translate(lang, item.title),
+            };
+            return Object.assign(item, mutatedObj);
+        });
     }
 }

@@ -10,6 +10,8 @@ export const NEWS_FEED_QUERY = gql`
                 image
                 pubDate
                 content
+                primaryLink
+                secondaryLink
             }
         }
     }

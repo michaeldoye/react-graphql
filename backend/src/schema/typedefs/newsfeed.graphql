@@ -6,6 +6,8 @@ type FeedItems {
     content: String
     contentSnippet: String
     categories: [String]
+    primaryLink: String
+    secondaryLink: String
 }
 
 type Feed {
