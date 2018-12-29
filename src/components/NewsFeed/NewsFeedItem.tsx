@@ -1,29 +1,3 @@
-// import React from "react";
-//
-// export const NewsCard = ({ item }: any) => {
-//     return (
-//         <div className="card">
-//             <img className="card-img-top" src={item.image} alt="Card image cap" />
-//             <ul className="list-group list-group-flush">
-//                 <li className="list-group-item">{item.pubDate}</li>
-//             </ul>
-//             <div className="card-body">
-//                 <h5 className="card-title">{item.title}</h5>
-//                 <p
-//                     className="card-text"
-//                     dangerouslySetInnerHTML={{ __html: item.content }}
-//                 />
-//                 <a
-//                     href={`https://magic.wizards.com${item.link}`}
-//                     target="_blank"
-//                     className="btn btn-primary">
-//                     Read More
-//                 </a>
-//             </div>
-//         </div>
-//     );
-// };
-
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
@@ -36,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 
 const styles = {
     card: {
-        maxWidth: 345,
+        maxWidth: 'none',
     },
     media: {
         height: 140,
@@ -46,7 +20,7 @@ const styles = {
     },
 };
 
-function NewsCard(props: any) {
+function NewsFeedItem(props: any) {
     const { classes, item } = props;
     return (
         <Card className={classes.card}>
@@ -80,8 +54,8 @@ function NewsCard(props: any) {
     );
 }
 
-NewsCard.propTypes = {
+NewsFeedItem.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(NewsCard);
+export default withStyles(styles)(NewsFeedItem);

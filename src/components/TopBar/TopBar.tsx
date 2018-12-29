@@ -5,7 +5,7 @@ import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import MenuIcon from "@material-ui/icons/Menu";
+import CodeIcon from "@material-ui/icons/Code";
 
 const styles = {
     root: {
@@ -30,13 +30,13 @@ function TopBar(props: any) {
                         className={classes.menuButton}
                         color="inherit"
                         aria-label="Menu">
-                        <MenuIcon />
+                        <CodeIcon />
                     </IconButton>
                     <Typography
                         variant="h6"
                         color="inherit"
                         className={classes.grow}>
-                        MTG News
+                        GraphQL Demo
                     </Typography>
                 </Toolbar>
             </AppBar>

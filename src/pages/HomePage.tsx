@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import "./App.scss";
-import { client } from "../../graphql/client";
-import { ApolloProvider } from "react-apollo";
-import { NewsCardList } from "../NewsCardList";
-import { LANGUAGE_OPTIONS, PAGE_SIZE_OPTIONS } from "../../shared/constants";
-import { IComponentState } from "./App.interface";
-import LanguageSelect from "../LanguageSelect";
-import SizeSelect from "../SizeSelect";
-import TopBar from "../TopBar";
+import { NewsFeed } from "../components/NewsFeed/NewsFeed";
+import { LANGUAGE_OPTIONS, PAGE_SIZE_OPTIONS } from "../shared/constants";
+import LanguageSelect from "../components/LanguageSelect/LanguageSelect";
+import SizeSelect from "../components/SizeSelect/SizeSelect";
 
-export class App extends Component<{}, IComponentState> {
+export interface IComponentState {
+    pageSize: string;
+    language: string;
+}
+
+export class HomePage extends Component<{}, IComponentState> {
     constructor(props: any) {
         super(props);
 
@@ -30,16 +30,14 @@ export class App extends Component<{}, IComponentState> {
 
     languageChangeHandler(event: any) {
         this.setState({
-            language: event ? event.target.value : "",
+            language: event.target.value,
         });
     }
 
     render() {
         const { pageSize, language } = this.state;
-
         return (
-            <div className="App">
-                <TopBar />
+            <div className="App__content">
                 <section className="App__section-controls container">
                     <SizeSelect
                         changeHandler={this.pageSizeChangeHandler}
@@ -50,11 +48,7 @@ export class App extends Component<{}, IComponentState> {
                         language={language}
                     />
                 </section>
-                <section className="App__section container">
-                    <ApolloProvider client={client}>
-                        <NewsCardList querySize={pageSize} language={language} />
-                    </ApolloProvider>
-                </section>
+                <NewsFeed feedSize={pageSize} language={language} />
             </div>
         );
     }

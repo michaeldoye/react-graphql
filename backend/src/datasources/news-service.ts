@@ -10,13 +10,13 @@ import {
 // @ts-ignore
 import * as Parser from "rss-parser";
 
-/*
+/**
  * NewsService
  *
  * Fetches the XML RSS feed and converts
  * it to JSON and translates it with the
  * Google Translate API
- **/
+ */
 export class NewsService {
     private _parser: any;
 
