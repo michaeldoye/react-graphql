@@ -3,49 +3,64 @@ import * as moment from "moment";
 import {
     IRssFeed,
     IRssFeedItem,
-    NEWS_ENDPOINT_XML,
+    NEWS_ENDPOINT,
     TRANSLATE_API_KEY,
-    TRANSLATE_ENDPOINT_JSON,
+    TRANSLATE_ENDPOINT,
 } from "../constants";
 // @ts-ignore
 import * as Parser from "rss-parser";
 
 /**
  * NewsService
- *
- * Fetches the XML RSS feed and converts
- * it to JSON and translates it with the
- * Google Translate API
  */
 export class NewsService {
-    private _parser: any;
-
-    constructor() {
-        this._parser = new Parser();
-    }
-
+    /**
+     * @public getNews
+     *
+     * @description
+     * Fetches the XML RSS feed and converts it to JSON and translates it with the
+     * Google Translate API
+     *
+     * @param size: string
+     * @param lang: string
+     * @return Promise<IRssFeed>
+     */
     public async getNews(size: string, lang: string): Promise<IRssFeed> {
-        const feed = await this._parser.parseURL(NEWS_ENDPOINT_XML);
+        const parser = new Parser();
+        const feed = await parser.parseURL(NEWS_ENDPOINT);
         // Add/transform some props of the news objects
-        const newsArticles = this._extendNewsObject(feed.items, lang);
+        const newsArticles = this._extendAndTranslateNewsObject(feed.items, lang);
         return {
             items: newsArticles.slice(0, Number(size)),
             title: feed.title,
         };
     }
 
-    private async _translate(lang: any, str: any): Promise<string> {
-        // https://cloud.google.com/translate/v2/getting_started
+    /**
+     * @private _translate
+     *
+     * @description
+     * Translates a string using the Google Translate API
+     * see: https://cloud.google.com/translate/v2/getting_started
+     *
+     * @param lang: string
+     * @param str: string | Promise<string>
+     * @return Promise<string>
+     */
+    private async _translate(
+        lang: string,
+        str: string | Promise<string>
+    ): Promise<string> {
         if (lang !== "en") {
             const url =
-                TRANSLATE_ENDPOINT_JSON +
+                TRANSLATE_ENDPOINT +
                 "?key=" +
                 TRANSLATE_API_KEY +
                 "&source=en" +
                 "&target=" +
                 lang +
                 "&q=" +
-                encodeURIComponent(str);
+                encodeURIComponent(<string>str);
             const fetchTranslation = await fetch(url);
             const translated = await fetchTranslation.json();
 
@@ -54,22 +69,54 @@ export class NewsService {
         return str;
     }
 
-    private _getImageUrlFromString(str: any): any {
+    /**
+     * @private _getImageUrlFromString
+     *
+     * @description
+     * Extracts the first image from the html content of the
+     * RSS feed
+     *
+     * @param str: string | Promise<string>
+     * @return string
+     */
+    private _getImageUrlFromString(str: string | Promise<string>): string {
         const regEx = /https?([^"\s]+)"?[^>]*.jpg/;
-        return str && regEx.exec(str)![0];
+        const imgUrl = regEx.exec(<string>str);
+        return imgUrl ? imgUrl[0] : "https://placehold.it/300";
     }
 
-    private _getTimeFromNow(date: any): string {
+    /**
+     * @private _getTimeFromNow
+     *
+     * @description
+     * Transforms the feed item published date to a moment
+     * date from now format
+     *
+     * @param date: string | Promise<string>
+     * @return string
+     */
+    private _getTimeFromNow(date: string | Promise<string>): string {
         // @ts-ignore because moment :(
         return moment(new Date(date)).fromNow();
     }
 
-    private _extendNewsObject(
+    /**
+     * @private _extendAndTranslateNewsObject
+     *
+     * @description
+     * Adds image and link properties to feed items
+     * Translates properties of the news feed items
+     *
+     * @param newsObj: IRssFeedItem[]
+     * @param lang: string
+     * @return IRssFeedItem[]
+     */
+    private _extendAndTranslateNewsObject(
         newsObj: IRssFeedItem[],
         lang: string
     ): IRssFeedItem[] {
         return newsObj.map((item: IRssFeedItem) => {
-            const mutatedObj = {
+            const mutatedNewsObj = {
                 primaryLink: this._translate(lang, "Share"),
                 secondaryLink: this._translate(lang, "Read More"),
                 image: this._getImageUrlFromString(item.content),
@@ -77,7 +124,7 @@ export class NewsService {
                 content: this._translate(lang, item.content),
                 title: this._translate(lang, item.title),
             };
-            return Object.assign(item, mutatedObj);
+            return Object.assign(item, mutatedNewsObj);
         });
     }
 }

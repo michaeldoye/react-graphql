@@ -18,7 +18,3 @@ type Feed {
 type Query {
     newsFeed(size: String, lang: String): Feed
 }
-
-schema {
-    query: Query
-}

@@ -5,13 +5,7 @@ const uglify = require('gulp-uglify');
 
 gulp.task('compile', ['copy'], () => {
     const tsResult = gulp.src(["backend/src/**/*.ts"])
-        .pipe(ts({
-            lib: [
-                "es6",
-                "dom",
-                "esnext",
-            ],
-        }));
+        .pipe(ts({ lib: ["es6", "dom", "esnext"] }));
     return tsResult
         .pipe(uglify())
         .pipe(sourcemaps.write())
@@ -22,6 +16,5 @@ gulp.task('compile', ['copy'], () => {
 gulp.task('copy', () => {
     const sourceFiles = ['backend/src/schema/typedefs/*.*'];
     const outputPath = 'backend/lib/schema/typedefs';
-
     return gulp.src(sourceFiles).pipe(gulp.dest(outputPath));
 });
