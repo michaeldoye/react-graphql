@@ -1,5 +1,5 @@
 import { NewsService } from "./news-service";
-import { BooksService } from "./article-service";
+import { BooksService } from "./book-service";
 
 export const dataSources = {
     newsService: new NewsService(),
