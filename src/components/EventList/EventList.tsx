@@ -46,9 +46,9 @@ class EventList extends Component<ComponentProps, ComponentState> {
         }));
     }
 
-    public handleCreateEvent(state: any, createFn: any): void {
+    public handleCreateEvent(eventFeilds: any, createFn: any): void {
         createFn({
-            variables: state,
+            variables: eventFeilds,
         }).then(() => this.refetch());
     }
 
