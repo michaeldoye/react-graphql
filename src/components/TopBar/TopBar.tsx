@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
@@ -20,30 +20,41 @@ const styles = {
     },
 };
 
-function TopBar(props: any) {
-    const { classes } = props;
-    return (
-        <div className={classes.root}>
-            <AppBar position="static">
-                <Toolbar>
-                    <IconButton
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="Menu">
-                        <CodeIcon />
-                    </IconButton>
-                    <Typography
-                        variant="h6"
-                        color="inherit"
-                        className={classes.grow}>
-                        GraphQL Demo
-                    </Typography>
-                </Toolbar>
-            </AppBar>
-        </div>
-    );
+interface CopmonentProps {
+    classes: any;
 }
 
+class TopBar extends Component<CopmonentProps, any> {
+    constructor(props: any) {
+        super(props);
+    }
+
+    render(): React.ReactElement<any> | null {
+        const { classes } = this.props;
+        return (
+            <div className={classes.root}>
+                <AppBar position="static">
+                    <Toolbar>
+                        <IconButton
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="Menu">
+                            <CodeIcon />
+                        </IconButton>
+                        <Typography
+                            variant="h6"
+                            color="inherit"
+                            className={classes.grow}>
+                            GraphQL Demo
+                        </Typography>
+                    </Toolbar>
+                </AppBar>
+            </div>
+        );
+    }
+}
+
+// @ts-ignore
 TopBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };

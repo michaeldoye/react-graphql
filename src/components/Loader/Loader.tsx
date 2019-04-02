@@ -6,6 +6,9 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 const styles = (theme: any) => ({
     progress: {
         margin: theme.spacing.unit * 2,
+        position: "absolute",
+        top: "50%",
+        left: "50%",
     },
 });
 
@@ -22,4 +25,5 @@ Loader.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
+// @ts-ignore
 export default withStyles(styles)(Loader);

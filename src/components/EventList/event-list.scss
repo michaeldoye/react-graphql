@@ -1,0 +1,35 @@
+.card-wrapper {
+    width: 48%;
+    margin-bottom: 15px;
+    margin-right: 14px;
+}
+
+p.card-text img {
+    display: none;
+}
+
+p.card-text a {
+    display: none;
+}
+
+.comments {
+    padding: 5px;
+    font-size: 12px;
+}
+
+.comment {
+    padding: 5px;
+    background: #fafafa;
+    border-radius: 9px;
+    margin-bottom: 5px;
+}
+
+.card-actions {
+    position: relative;
+}
+
+.delete-button {
+    position: absolute !important;
+    right: 3px;
+    bottom: 3px;
+}
