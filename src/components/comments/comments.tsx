@@ -32,7 +32,7 @@ class CommentPanel extends Component<ComponentProps, ComponentState> {
         };
     }
 
-    render() {
+    render(): React.ReactElement<any> | null {
         const { classes, eventId } = this.props;
         return (
             <div className={classes.root}>

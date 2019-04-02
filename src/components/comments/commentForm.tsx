@@ -24,17 +24,17 @@ class CommentForm extends Component<ComponentProps, {}> {
         this.input = React.createRef<HTMLFormElement>();
     }
 
-    getValueFromFormField(e: any) {
+    public getValueFromFormField(e: any): void {
         return e.target.children[0].lastElementChild.children[0].value;
     }
 
-    clearInput() {
+    public clearInput(): void {
         const form = this.input.current;
         // @ts-ignore
         form.children[0].lastElementChild.children[0].value = null;
     }
 
-    render() {
+    render(): React.ReactElement<any> | null {
         const { classes, eventId, showComments } = this.props;
         return (
             <div className={classes.root}>

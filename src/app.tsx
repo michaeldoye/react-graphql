@@ -14,6 +14,7 @@ const client = new AWSAppSyncClient({
         type: "API_KEY",
         apiKey: API_KEY,
     },
+    disableOffline: true,
 });
 
 interface ComponentState {}

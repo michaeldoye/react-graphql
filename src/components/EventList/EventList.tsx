@@ -72,7 +72,7 @@ class EventList extends Component<ComponentProps, ComponentState> {
                     <AddIcon />
                 </Fab>
 
-                <Query query={ListEvents} fetchPolicy={`no-cache`}>
+                <Query query={ListEvents} fetchPolicy={`network-only`}>
                     {({ loading, error, data, refetch }) => {
                         this.refetch = refetch;
                         if (loading) return <Loader />;
