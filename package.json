@@ -13,7 +13,7 @@
     "apollo-boost": "^0.1.23",
     "apollo-link-context": "^1.0.14",
     "apollo-link-ws": "^1.0.14",
-    "aws-appsync": "^1.7.1",
+    "aws-appsync": "^4.1.9",
     "aws-appsync-react": "^1.2.6",
     "bootstrap": "^4.2.1",
     "graphql": "^14.0.2",
